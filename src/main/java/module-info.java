@@ -4,6 +4,7 @@ module com.example.bunchbank {
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.sql;
     requires org.xerial.sqlitejdbc;
+    requires java.desktop;
 
 
     opens com.example.bunchbank to javafx.fxml;

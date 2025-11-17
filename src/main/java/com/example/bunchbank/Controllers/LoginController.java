@@ -1,5 +1,6 @@
 package com.example.bunchbank.Controllers;
 
+import com.example.bunchbank.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -20,6 +21,9 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        login_btn.setOnAction(e ->
+                Model.getInstance().getViewFactory().showClientWindow());
+
 
     }
 }
