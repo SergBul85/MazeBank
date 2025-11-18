@@ -1,6 +1,8 @@
 package com.example.bunchbank.Views;
 
 import com.example.bunchbank.Controllers.Client.ClientController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -11,10 +13,18 @@ import java.io.IOException;
 public class ViewFactory {
 
     //Client Views
-    private static AnchorPane dashboardView;
+
+    private final StringProperty clientSelectedMemuItem;
+    private AnchorPane dashboardView;
+    private AnchorPane transactionsView;
+
 
     public ViewFactory() {
+        this.clientSelectedMemuItem = new SimpleStringProperty("");
+    }
 
+    public StringProperty getClientSelectedMemuItem() {
+        return clientSelectedMemuItem;
     }
 
     public AnchorPane getDashboardView() {
@@ -26,6 +36,17 @@ public class ViewFactory {
             }
         }
         return dashboardView;
+    }
+
+    public AnchorPane getTransactionsView() {
+        if (transactionsView == null) {
+            try {
+                transactionsView = new FXMLLoader(getClass().getResource("/Fxml/Client/Transactions.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return transactionsView;
     }
 
     public void showLoginWindow() {

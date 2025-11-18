@@ -1,5 +1,6 @@
 package com.example.bunchbank.Controllers.Client;
 
+import com.example.bunchbank.Models.Model;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -16,6 +17,19 @@ public class ClientMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        addListeners();
+    }
 
+    private void addListeners() {
+        dashboard_btn.setOnAction(event -> onDashboard());
+        transaction_btn.setOnAction(event -> onTransactions());
+    }
+
+    private void onDashboard() {
+        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set("Dashboard");
+    }
+
+    private void onTransactions() {
+        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set("Transactions");
     }
 }
