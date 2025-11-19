@@ -13,8 +13,11 @@ import java.io.IOException;
 public class ViewFactory {
 
     //Client Views
+<<<<<<< HEAD
 
     private final StringProperty clientSelectedMemuItem;
+=======
+>>>>>>> 3c6d6159fa0cb1278173f6ae02682a8835052a8d
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
 
