@@ -17,6 +17,7 @@ public class ViewFactory {
 
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
+    private AnchorPane accountsView;
 
 
     public ViewFactory() {
@@ -26,6 +27,10 @@ public class ViewFactory {
     public StringProperty getClientSelectedMemuItem() {
         return clientSelectedMemuItem;
     }
+
+//
+//    Client Views Section
+//
 
     public AnchorPane getDashboardView() {
         if (dashboardView == null) {
@@ -47,6 +52,17 @@ public class ViewFactory {
             }
         }
         return transactionsView;
+    }
+
+    public AnchorPane getAccountsView() {
+        if (accountsView == null) {
+            try {
+                accountsView = new FXMLLoader(getClass().getResource("/Fxml/Client/Accounts.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return accountsView;
     }
 
     public void showLoginWindow() {
