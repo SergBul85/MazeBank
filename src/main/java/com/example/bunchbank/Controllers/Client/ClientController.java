@@ -16,10 +16,10 @@ public class ClientController implements Initializable {
         Model.getInstance().getViewFactory().getClientSelectedMemuItem().addListener((
                 observable, oldValue, newValue) -> {
             switch (newValue) {
-                case "Transactions":
+                case TRANSACTIONS:
                     client_parent.setCenter(Model.getInstance().getViewFactory().getTransactionsView());
                     break;
-                case "Accounts":
+                case ACCOUNTS:
                     client_parent.setCenter(Model.getInstance().getViewFactory().getAccountsView());
                     break;
                 default:

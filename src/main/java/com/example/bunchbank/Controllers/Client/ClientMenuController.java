@@ -1,6 +1,7 @@
 package com.example.bunchbank.Controllers.Client;
 
 import com.example.bunchbank.Models.Model;
+import com.example.bunchbank.Views.ClientMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
@@ -27,14 +28,14 @@ public class ClientMenuController implements Initializable {
     }
 
     private void onDashboard() {
-        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set("Dashboard");
+        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set(ClientMenuOptions.DASHBOARD);
     }
 
     private void onTransactions() {
-        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set("Transactions");
+        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set(ClientMenuOptions.TRANSACTIONS);
     }
 
     private void onAccounts() {
-        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set("Accounts");
+        Model.getInstance().getViewFactory().getClientSelectedMemuItem().set(ClientMenuOptions.ACCOUNTS);
     }
 }

@@ -2,8 +2,8 @@ package com.example.bunchbank.Views;
 
 import com.example.bunchbank.Controllers.Admin.AdminController;
 import com.example.bunchbank.Controllers.Client.ClientController;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -13,29 +13,39 @@ import java.io.IOException;
 
 public class ViewFactory {
 
+    private AccountType loginAccountType;
+
     //Client Views
-    private final StringProperty clientSelectedMemuItem;
+    private final ObjectProperty<ClientMenuOptions> clientSelectedMemuItem;
     private AnchorPane dashboardView;
     private AnchorPane transactionsView;
     private AnchorPane accountsView;
 
     //Admin Views
-    private final StringProperty adminSelectedMemuItem;
+    private final ObjectProperty<AdminMenuOptions> adminSelectedMemuItem;
     private AnchorPane createClientView;
 
 
     public ViewFactory() {
-        this.clientSelectedMemuItem = new SimpleStringProperty("");
-        this.adminSelectedMemuItem = new SimpleStringProperty("");
+        this.loginAccountType = AccountType.CLIENT;
+        this.clientSelectedMemuItem = new SimpleObjectProperty<>();
+        this.adminSelectedMemuItem = new SimpleObjectProperty<>();
     }
 
-    public StringProperty getClientSelectedMemuItem() {
-        return clientSelectedMemuItem;
+    public AccountType getLoginAccountType() {
+        return loginAccountType;
     }
 
-//
+    public void setLoginAccountType(AccountType loginAccountType) {
+        this.loginAccountType = loginAccountType;
+    }
+
+    //
 //    Client Views Section
 //
+    public ObjectProperty<ClientMenuOptions> getClientSelectedMemuItem() {
+        return clientSelectedMemuItem;
+    }
 
     public AnchorPane getDashboardView() {
         if (dashboardView == null) {
@@ -81,7 +91,7 @@ public class ViewFactory {
 // Admin Views Section
 //
 
-    public StringProperty getAdminSelectedMemuItem() {
+    public ObjectProperty<AdminMenuOptions> getAdminSelectedMemuItem() {
         return adminSelectedMemuItem;
     }
 
