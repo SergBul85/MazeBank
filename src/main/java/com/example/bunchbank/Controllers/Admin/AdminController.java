@@ -14,7 +14,14 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Model.getInstance().getViewFactory().getAdminSelectedMemuItem().addListener((
                 observable, oldValue, newValue) -> {
-            // ADD SWITCH STATEMENT
+            switch (newValue) {
+                case CREATE_CLIENT:
+                    admin_parent.setCenter(Model.getInstance().getViewFactory().getCreateClientView());
+                    break;
+                default:
+                    admin_parent.setCenter(Model.getInstance().getViewFactory().getClientsView());
+            }
+
         });
     }
 }

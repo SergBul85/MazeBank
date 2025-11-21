@@ -10,7 +10,7 @@
 
 
 <AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="create_client_conteiner"
-            stylesheets="@../../Styles/CreateClient.css" xmlns="http://javafx.com/javafx/25"
+            stylesheets="@../../Styles/CreateClient.css" xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.bunchbank.Controllers.Admin.CreateClientController">
     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Client Account" AnchorPane.leftAnchor="14.0"

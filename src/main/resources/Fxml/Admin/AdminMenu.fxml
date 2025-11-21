@@ -15,6 +15,7 @@
       xmlns="http://javafx.com/javafx/18"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.bunchbank.Controllers.Admin.AdminMenuController">
+
     <AnchorPane prefHeight="730.0" prefWidth="180.0" styleClass="left_conteiner">
         <VBox prefHeight="80.0" prefWidth="160.0" styleClass="title_container" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
