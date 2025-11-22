@@ -25,6 +25,7 @@ public class ViewFactory {
     private final ObjectProperty<AdminMenuOptions> adminSelectedMemuItem;
     private AnchorPane createClientView;
     private AnchorPane clientsView;
+    private AnchorPane depositView;
 
     public ViewFactory() {
         this.loginAccountType = AccountType.CLIENT;
@@ -117,6 +118,18 @@ public class ViewFactory {
         return clientsView;
     }
 
+    public AnchorPane getDepositView() {
+        if (depositView == null) {
+            try {
+                depositView = new FXMLLoader(getClass().getResource("/Fxml/Admin/Deposit.fxml")).load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return depositView;
+    }
+
+
     public void showAdminWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Admin.fxml"));
         AdminController controller = new AdminController();
@@ -124,10 +137,12 @@ public class ViewFactory {
         createStage(loader);
     }
 
+
     public void showLoginWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
         createStage(loader);
     }
+
 
     private static void createStage(FXMLLoader loader) {
         Scene scene = null;
