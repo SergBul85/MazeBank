@@ -1,8 +1,6 @@
 package com.example.bunchbank.Models;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DataBaseDriver {
 
@@ -17,9 +15,21 @@ public class DataBaseDriver {
         }
     }
 
+
     //
 //    Client Section
 //
+    public ResultSet getClientData(String pAddress, String password) {
+        Statement statement;
+        ResultSet resultSet = null;
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM CLIENTS WHERE PayeeAddress = '" + pAddress + "' AND Password = '" + password + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 
 
     //
