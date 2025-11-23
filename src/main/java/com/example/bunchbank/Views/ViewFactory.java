@@ -6,6 +6,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -129,7 +130,6 @@ public class ViewFactory {
         return depositView;
     }
 
-
     public void showAdminWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Admin/Admin.fxml"));
         AdminController controller = new AdminController();
@@ -137,12 +137,10 @@ public class ViewFactory {
         createStage(loader);
     }
 
-
     public void showLoginWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Fxml/Login.fxml"));
         createStage(loader);
     }
-
 
     private static void createStage(FXMLLoader loader) {
         Scene scene = null;
@@ -153,6 +151,8 @@ public class ViewFactory {
         }
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.getIcons().add(new Image(String.valueOf(ViewFactory.class.getResource("/Images/icon.png"))));
+        stage.setResizable(false);
         stage.setTitle("Bunch Bank");
         stage.show();
     }
