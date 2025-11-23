@@ -13,7 +13,7 @@
             stylesheets="@../../Styles/TransactionCell.css"
             xmlns="http://javafx.com/javafx/18"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.bunchbank.Controllers.Client.TransactionCellController">
+            >
     <VBox prefHeight="50.0" prefWidth="50.0" styleClass="trans_icon_container" AnchorPane.bottomAnchor="5.0"
           AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="5.0">
         <FontAwesomeIconView fx:id="in_icon" glyphName="LONG_ARROW_RIGHT" size="17"/>
