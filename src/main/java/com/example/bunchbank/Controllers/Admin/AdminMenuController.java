@@ -4,6 +4,7 @@ import com.example.bunchbank.Models.Model;
 import com.example.bunchbank.Views.AdminMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,6 +24,7 @@ public class AdminMenuController implements Initializable {
         create_client_btn.setOnAction(event -> onCreateClient());
         clients_btn.setOnAction(event -> onCLients());
         deposit_btn.setOnAction(event -> onDeposit());
+        logout_btn.setOnAction(event -> onLogout());
     }
 
     private void onCreateClient() {
@@ -35,6 +37,17 @@ public class AdminMenuController implements Initializable {
 
     private void onDeposit() {
         Model.getInstance().getViewFactory().getAdminSelectedMemuItem().set(AdminMenuOptions.DEPOSIT);
+    }
+
+    private void onLogout() {
+        //Get Stage
+        Stage stage = (Stage) create_client_btn.getScene().getWindow();
+        //Close Client window
+        Model.getInstance().getViewFactory().closeStage(stage);
+        //Show Login Window
+        Model.getInstance().getViewFactory().showLoginWindow();
+        //Set Client Login Success Flag to False
+        Model.getInstance().setAdminLoginSuccessFlag(false);
     }
 
 }
