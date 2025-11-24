@@ -85,6 +85,19 @@ public class DataBaseDriver {
         }
     }
 
+    public ResultSet getAllClientData() {
+        Statement statement;
+        ResultSet resultSet = null;
+
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM Clients");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
     //
 //    Utility Methods
 //
@@ -105,4 +118,29 @@ public class DataBaseDriver {
         return id;
     }
 
+    public ResultSet getCheckinAccountData(String pAddress) {
+        Statement statement;
+        ResultSet resultSet = null;
+
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM CheckingAccounts WHERE Owner = '" + pAddress + "'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
+
+    public ResultSet getSavingsAccountData(String pAddress) {
+        Statement statement;
+        ResultSet resultSet = null;
+
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts WHERE Owner = '" + pAddress + "'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return resultSet;
+    }
 }
