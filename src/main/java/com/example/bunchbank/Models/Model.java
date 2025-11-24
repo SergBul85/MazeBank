@@ -6,21 +6,20 @@ import com.example.bunchbank.Views.ViewFactory;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class Model {
 
     private static Model model;
     private final ViewFactory viewFactory;
     private final DataBaseDriver dataBaseDriver;
-    private AccountType loginAccountType = AccountType.ADMIN;
 
     // Client Data Section
     private final Client client;
     private boolean clientLoginSuccessFlag;
 
     // Admin Data Section
+
+    private boolean adminLoginSuccessFlag;
 
     private Model() {
         this.viewFactory = new ViewFactory();
@@ -31,6 +30,7 @@ public class Model {
         this.client = new Client("", "", "", null, null, null);
 
         // Admin Data Section
+        this.adminLoginSuccessFlag = false;
 
     }
 
@@ -47,14 +47,6 @@ public class Model {
 
     public DataBaseDriver getDataBaseDriver() {
         return dataBaseDriver;
-    }
-
-    public AccountType getLoginAccountType() {
-        return loginAccountType;
-    }
-
-    public void setLoginAccountType(AccountType loginAccountType) {
-        this.loginAccountType = loginAccountType;
     }
 
     //
@@ -82,7 +74,6 @@ public class Model {
                 this.client.firstNameProperty().set(resultSet.getString("FirstName"));
                 this.client.lastNameProperty().set(resultSet.getString("LastName"));
                 this.client.payeeAddressProperty().set(resultSet.getString("PayeeAddress"));
-
                 String[] dateParts = resultSet.getString("Date").split("-");
                 LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]),
                         Integer.parseInt(dateParts[1]),
@@ -95,4 +86,26 @@ public class Model {
         }
     }
 
+    //
+    // Admin Method Section
+    //
+
+    public boolean getAdminLoginSuccessFlag() {
+        return adminLoginSuccessFlag;
+    }
+
+    public void setAdminLoginSuccessFlag(boolean flag) {
+        this.adminLoginSuccessFlag = flag;
+    }
+
+    public void evaluateAdminCred(String username, String password) {
+        ResultSet resultSet = dataBaseDriver.getAdminData(username, password);
+        try {
+            if (resultSet.isBeforeFirst()) {
+                this.adminLoginSuccessFlag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
