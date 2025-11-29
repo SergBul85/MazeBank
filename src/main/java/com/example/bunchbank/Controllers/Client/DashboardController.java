@@ -1,6 +1,7 @@
 package com.example.bunchbank.Controllers.Client;
 
 import com.example.bunchbank.Models.Model;
+import com.example.bunchbank.Views.TransactionCellFactory;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -28,6 +29,9 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bindData();
+        initTransactionsList();
+        transactional_listview.setItems(Model.getInstance().getLatestTransactions());
+        transactional_listview.setCellFactory(e -> new TransactionCellFactory());
     }
 
     private void bindData() {
@@ -37,5 +41,11 @@ public class DashboardController implements Initializable {
         checking_acc_num.textProperty().bind(Model.getInstance().getClient().checkingAccountProperty().get().accountNumberProperty());
         savings_bal.textProperty().bind(Model.getInstance().getClient().savingsAccountProperty().get().balanceProperty().asString());
         savings_acc_num.textProperty().bind(Model.getInstance().getClient().savingsAccountProperty().get().accountNumberProperty());
+    }
+
+    private void initTransactionsList() {
+        if (Model.getInstance().getLatestTransactions().isEmpty()) {
+            Model.getInstance().setLatestTransactions();
+        }
     }
 }

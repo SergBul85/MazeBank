@@ -19,7 +19,8 @@ public class Model {
     // Client Data Section
     private final Client client;
     private boolean clientLoginSuccessFlag;
-
+    private final ObservableList<Transaction> latestTransactions;
+    private final ObservableList<Transaction> allTransactions;
     // Admin Data Section
 
     private boolean adminLoginSuccessFlag;
@@ -32,6 +33,8 @@ public class Model {
         // Client Data Section
         this.clientLoginSuccessFlag = false;
         this.client = new Client("", "", "", null, null, null);
+        this.latestTransactions = FXCollections.observableArrayList();
+        this.allTransactions = FXCollections.observableArrayList();
 
         // Admin Data Section
         this.adminLoginSuccessFlag = false;
@@ -95,6 +98,45 @@ public class Model {
         }
     }
 
+    private void prepareTransactions(ObservableList<Transaction> transactions, int limit) {
+
+        ResultSet resultSet = dataBaseDriver.getTransactions(this.client.payeeAddressProperty().get(), limit);
+        try {
+
+            while (resultSet.next()) {
+                String sender = resultSet.getString("Sender");
+                String receiver = resultSet.getString("Receiver");
+                double amount = resultSet.getDouble("Amount");
+                String[] dateParts = resultSet.getString("Date").split("-");
+                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]),
+                        Integer.parseInt(dateParts[1]),
+                        Integer.parseInt(dateParts[2]));
+                String message = resultSet.getString("Message");
+
+                transactions.add(new Transaction(sender, receiver, amount, date, message));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setLatestTransactions() {
+        prepareTransactions(this.latestTransactions, 5);
+    }
+
+    public ObservableList<Transaction> getLatestTransactions() {
+        return latestTransactions;
+    }
+
+    public void setAllTransactions() {
+        prepareTransactions(this.allTransactions, -1);
+    }
+
+    public ObservableList<Transaction> getAllTransactions() {
+        return allTransactions;
+    }
+
     //
     // Admin Method Section
     //
@@ -156,7 +198,7 @@ public class Model {
             String[] dateParts = resultSet.getString("Date").split("-");
             LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
 
-            serchresults.add( new Client(fName, lName, pAddress, checkingAccount, savingsAccount, date) );
+            serchresults.add(new Client(fName, lName, pAddress, checkingAccount, savingsAccount, date));
 
         } catch (SQLException e) {
             e.printStackTrace();
