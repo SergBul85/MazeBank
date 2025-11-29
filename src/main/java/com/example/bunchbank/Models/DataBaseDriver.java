@@ -98,6 +98,33 @@ public class DataBaseDriver {
         return resultSet;
     }
 
+    public ResultSet searchClient(String pAddress) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery(MessageFormat.format("SELECT * FROM Clients WHERE PayeeAddress = ''{0}''", pAddress));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+    public void depositSavings(String pAddress, double amount) {
+        Statement statement;
+        ResultSet resultSet = null;
+        try {
+            statement = this.conn.createStatement();
+            statement.executeUpdate("UPDATE  SavingsAccounts SET " +
+                    "Balance = " + amount + " WHERE Owner = '" + pAddress + "'");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     //
 //    Utility Methods
 //
