@@ -99,15 +99,9 @@ public class DashboardController implements Initializable {
             } else {
                 income += transaction.amountProperty().get();
             }
-            System.out.println("expenses - " + expenses);
-            System.out.println("income - " + income);
-            System.out.println("----------------");
-
         }
         income_lbl.setText("$ " + income);
         expense_lbl.setText("$ " + expenses);
-
-
     }
 
 }
