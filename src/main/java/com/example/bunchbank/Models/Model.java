@@ -83,9 +83,7 @@ public class Model {
                 this.client.lastNameProperty().set(resultSet.getString("LastName"));
                 this.client.payeeAddressProperty().set(resultSet.getString("PayeeAddress"));
                 String[] dateParts = resultSet.getString("Date").split("-");
-                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]),
-                        Integer.parseInt(dateParts[1]),
-                        Integer.parseInt(dateParts[2]));
+                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]), Integer.parseInt(dateParts[1]), Integer.parseInt(dateParts[2]));
                 this.client.dateProperty().set(date);
                 checkingAccount = getCheckingAccount(pAddress);
                 savingsAccount = getSavingsAccount(pAddress);
@@ -107,10 +105,15 @@ public class Model {
                 String sender = resultSet.getString("Sender");
                 String receiver = resultSet.getString("Receiver");
                 double amount = resultSet.getDouble("Amount");
-                String[] dateParts = resultSet.getString("Date").split("-");
-                LocalDate date = LocalDate.of(Integer.parseInt(dateParts[0]),
+
+                String dateOnly = resultSet.getString("Date").split("T")[0];  // "2025-01-29"
+                String[] dateParts = dateOnly.split("-");
+                LocalDate date = LocalDate.of(
+                        Integer.parseInt(dateParts[0]),
                         Integer.parseInt(dateParts[1]),
-                        Integer.parseInt(dateParts[2]));
+                        Integer.parseInt(dateParts[2])
+                );
+
                 String message = resultSet.getString("Message");
 
                 transactions.add(new Transaction(sender, receiver, amount, date, message));
@@ -242,4 +245,6 @@ public class Model {
 
         return account;
     }
+
+
 }

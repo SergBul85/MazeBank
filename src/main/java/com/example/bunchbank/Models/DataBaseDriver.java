@@ -72,18 +72,18 @@ public class DataBaseDriver {
         try {
             statement = conn.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts " +
-                    "WHERE Owner = '" + pAddress + "';''");
+                    "WHERE Owner = '" + pAddress + "';");
 
             double newBalance;
             if (operation.equals("ADD")) {
                 newBalance = resultSet.getDouble("Balance") + amount;
                 statement.executeUpdate("UPDATE SavingsAccounts Set Balance = '" + newBalance + "' " +
-                        "WHERE Owner = '" + pAddress + "';''");
+                        "WHERE Owner = '" + pAddress + "';");
             } else {
                 if (resultSet.getDouble("Balance") >= amount) {
                     newBalance = resultSet.getDouble("Balance") - amount;
                     statement.executeUpdate("UPDATE SavingsAccounts Set Balance = '" + newBalance + "' " +
-                            "WHERE Owner = '" + pAddress + "';''");
+                            "WHERE Owner = '" + pAddress + "';");
                 }
             }
         } catch (SQLException e) {

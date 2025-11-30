@@ -6,6 +6,7 @@ module com.example.bunchbank {
     requires org.xerial.sqlitejdbc;
     requires java.desktop;
     requires javafx.graphics;
+//    requires com.example.bunchbank;
 
 
     opens com.example.bunchbank to javafx.fxml;

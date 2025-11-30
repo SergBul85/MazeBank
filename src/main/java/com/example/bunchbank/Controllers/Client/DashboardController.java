@@ -1,6 +1,7 @@
 package com.example.bunchbank.Controllers.Client;
 
 import com.example.bunchbank.Models.Model;
+import com.example.bunchbank.Models.Transaction;
 import com.example.bunchbank.Views.TransactionCellFactory;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
@@ -35,6 +36,7 @@ public class DashboardController implements Initializable {
         transactional_listview.setItems(Model.getInstance().getLatestTransactions());
         transactional_listview.setCellFactory(e -> new TransactionCellFactory());
         send_money_btn.setOnAction(e -> onSendMoney());
+        accountSummary();
     }
 
     private void bindData() {
@@ -85,5 +87,28 @@ public class DashboardController implements Initializable {
 
     }
 
+    //Method calculates all expenses and income
+    private void accountSummary() {
+        double income = 0;
+        double expenses = 0;
 
+        if (Model.getInstance().getAllTransactions().isEmpty()) {
+            Model.getInstance().setAllTransactions();
+        }
+        for (Transaction transaction : Model.getInstance().getAllTransactions()) {
+            if (transaction.senderProperty().get().equals(Model.getInstance().getClient().payeeAddressProperty().get())) {
+                expenses += transaction.amountProperty().get();
+            } else {
+                income += transaction.amountProperty().get();
+            }
+            System.out.println("expenses - " + expenses);
+            System.out.println("income - " + income);
+            System.out.println("----------------");
+
+        }
+        income_lbl.setText("$ " + income);
+        expense_lbl.setText("$ " + expenses);
+
+
+    }
 }
