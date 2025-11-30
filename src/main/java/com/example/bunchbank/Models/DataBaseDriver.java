@@ -3,6 +3,7 @@ package com.example.bunchbank.Models;
 import java.sql.*;
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DataBaseDriver {
 
@@ -45,6 +46,66 @@ public class DataBaseDriver {
         }
 
         return resultSet;
+    }
+
+    //Method returns savings account balance
+    public double getSavingsAccountBalance(String pAddress) {
+        Statement statement;
+        ResultSet resultSet;
+        double balance = 0;
+
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts " +
+                    "WHERE Owner = '" + pAddress + "';''");
+            balance = resultSet.getDouble("Balance");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return balance;
+    }
+
+    //Method to either add or subtract balance given operation
+    public void updateBalance(String pAddress, double amount, String operation) {
+        Statement statement;
+        ResultSet resultSet;
+        try {
+            statement = conn.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts " +
+                    "WHERE Owner = '" + pAddress + "';");
+
+            double newBalance;
+            if (operation.equals("ADD")) {
+                newBalance = resultSet.getDouble("Balance") + amount;
+                statement.executeUpdate("UPDATE SavingsAccounts Set Balance = '" + newBalance + "' " +
+                        "WHERE Owner = '" + pAddress + "';");
+            } else {
+                if (resultSet.getDouble("Balance") >= amount) {
+                    newBalance = resultSet.getDouble("Balance") - amount;
+                    statement.executeUpdate("UPDATE SavingsAccounts Set Balance = '" + newBalance + "' " +
+                            "WHERE Owner = '" + pAddress + "';");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Creates and records new transaction
+    public void newTransaction(String sender, String receiver, double amount, String message) {
+        Statement statement;
+        ResultSet resultSet;
+
+        try {
+            statement = conn.createStatement();
+            LocalDateTime date = LocalDateTime.now();
+            statement.executeUpdate(
+                    "INSERT INTO Transactions (Sender, Receiver, Amount, Date, Message) " +
+                            "VALUES ('" + sender + "', '" + receiver + "', " + amount + ", '" + date + "', '" + message + "')"
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //
@@ -112,20 +173,6 @@ public class DataBaseDriver {
         return resultSet;
     }
 
-    public ResultSet searchClient(String pAddress) {
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            statement = this.conn.createStatement();
-            resultSet = statement.executeQuery(MessageFormat.format("SELECT * FROM Clients WHERE PayeeAddress = ''{0}''", pAddress));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return resultSet;
-    }
-
     public void depositSavings(String pAddress, double amount) {
         Statement statement;
         ResultSet resultSet = null;
@@ -142,6 +189,20 @@ public class DataBaseDriver {
     //
 //    Utility Methods
 //
+
+    public ResultSet searchClient(String pAddress) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = this.conn.createStatement();
+            resultSet = statement.executeQuery(MessageFormat.format("SELECT * FROM Clients WHERE PayeeAddress = ''{0}''", pAddress));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return resultSet;
+    }
 
     public int getLastClientsId() {
         Statement statement;
